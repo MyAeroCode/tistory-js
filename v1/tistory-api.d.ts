@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput } from "./tistory-api-types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput } from "./types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */

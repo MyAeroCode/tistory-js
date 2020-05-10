@@ -18,4 +18,4 @@ var PostVisiblity;
      */
     PostVisiblity[PostVisiblity["PUBLISH"] = 3] = "PUBLISH";
 })(PostVisiblity = exports.PostVisiblity || (exports.PostVisiblity = {}));
-//# sourceMappingURL=tistory-api-types.js.map
+//# sourceMappingURL=common.js.map
