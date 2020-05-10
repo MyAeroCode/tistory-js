@@ -1,10 +1,10 @@
-import { TistoryApi } from "../../src";
+import { TistoryApiV1 } from "../../src";
 
 async function main() {
     try {
         //
         // 키를 사용하여 API 객체를 생성한다.
-        const api = new TistoryApi({
+        const api = new TistoryApiV1({
             client: "YOUR_CLIENT_KEY",
             secret: "YOUR_SECRET_KEY",
         });
@@ -31,9 +31,13 @@ async function main() {
             content: "내용이 수정되었습니다!",
         });
 
-        console.log("done", res);
+        //
+        // 성공 응답
+        console.log(res);
     } catch (e) {
-        console.error("err", e.message);
+        //
+        // 실패 응답
+        console.error(e.message);
     }
 }
 main();

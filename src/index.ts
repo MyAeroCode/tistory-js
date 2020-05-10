@@ -1,2 +1,2 @@
-export * from "./tistory-api";
-export * from "./tistory-api-types";
+export * from "./tistory-api-v1";
+export * from "./tistory-api-v1-types";
