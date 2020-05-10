@@ -1,0 +1,27 @@
+{
+    "name": "tistory-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "ts-node ./src"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MyAeroCode/tistory-api.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MyAeroCode/tistory-api/issues"
+    },
+    "homepage": "https://github.com/MyAeroCode/tistory-api#readme",
+    "devDependencies": {
+        "@types/node": "^13.13.5",
+        "ts-node": "^8.10.1",
+        "typescript": "^3.8.3"
+    },
+    "dependencies": {}
+}
