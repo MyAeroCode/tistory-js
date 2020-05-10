@@ -28,7 +28,9 @@
 먼저 `App ID`와 `Secret Key`를 사용하여 API 객체를 생성합니다.
 
 ```ts
-const api = new TistoryApiV1({
+import { TistoryApi } from "tistory-api/v1";
+
+const api = new TistoryApi({
     client: "YOUR_CLIENT_KEY",
     secret: "YOUR_SECRET_KEY",
 });

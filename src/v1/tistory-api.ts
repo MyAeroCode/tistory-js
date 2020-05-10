@@ -1,6 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
-import { TistoryApiV1Types } from "./tistory-api-v1-types";
+import {
+    TistoryKey,
+    TistoryAccountInfo,
+    ModifyPostInput,
+    ModifyPostOutput,
+} from "./types";
 
 /**
  * 티스토리 URL.
@@ -10,11 +15,11 @@ const tistoryUrl = "https://tistory.com";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
-export class TistoryApiV1 {
+export class TistoryApi {
     /**
      * 티스토리 API를 호출할 수 있는 키
      */
-    private readonly key: TistoryApiV1Types.TistoryKey;
+    private readonly key: TistoryKey;
 
     /**
      * 데이터에 공용 속성을 부여한다.
@@ -27,7 +32,7 @@ export class TistoryApiV1 {
         });
     }
 
-    constructor(key: TistoryApiV1Types.TistoryKey) {
+    constructor(key: TistoryKey) {
         this.key = key;
     }
 
@@ -38,7 +43,7 @@ export class TistoryApiV1 {
      * @param account 티스토리 계정 정보
      */
     public async getCodeViaAccountInfo(
-        account: TistoryApiV1Types.TistoryAccountInfo
+        account: TistoryAccountInfo
     ): Promise<string> {
         /**
          * 로그인 시도 응답
@@ -157,9 +162,7 @@ export class TistoryApiV1 {
     /**
      * 특정 게시글을 수정합니다.
      */
-    public async modifyPost(
-        arg: TistoryApiV1Types.ModifyPostInput
-    ): Promise<TistoryApiV1Types.ModifyPostOutput> {
+    public async modifyPost(arg: ModifyPostInput): Promise<ModifyPostOutput> {
         try {
             const res = await axios({
                 method: "POST",
