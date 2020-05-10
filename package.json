@@ -1,6 +1,6 @@
 {
     "name": "tistory-api",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "Unofficial Tistory API",
     "main": "out/index.js",
     "scripts": {
