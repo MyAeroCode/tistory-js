@@ -9,6 +9,8 @@ import {
     ListPostOutput,
     BlogInfoOutput,
     BlogInfoInput,
+    ReadPostInput,
+    ReadPostOutput,
 } from "./types";
 
 /**
@@ -187,6 +189,22 @@ export class TistoryApi {
             const res = await axios({
                 method: "GET",
                 url: "https://www.tistory.com/apis/post/list?",
+                params: this.dataMiddleware(arg),
+            });
+            return res.data.tistory;
+        } catch (err) {
+            throw new Error(err?.response?.data?.tistory?.error_message);
+        }
+    }
+
+    /**
+     * 게시글 하나를 읽어옵니다.
+     */
+    public async readPost(arg: ReadPostInput): Promise<ReadPostOutput> {
+        try {
+            const res = await axios({
+                method: "GET",
+                url: "https://www.tistory.com/apis/post/read?",
                 params: this.dataMiddleware(arg),
             });
             return res.data.tistory;
