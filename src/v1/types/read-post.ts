@@ -1,4 +1,4 @@
-import { PostVisiblity, CommonInput } from "./common";
+import { CommonInput } from "./common";
 
 /**
  * 게시글 조회 API 입력

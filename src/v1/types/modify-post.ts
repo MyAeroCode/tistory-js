@@ -1,4 +1,4 @@
-import { PostVisiblity, CommonInput } from "./common";
+import { CommonInput } from "./common";
 
 /**
  * 게시글 수정 API 입력
@@ -27,8 +27,11 @@ export type ModifyPostInput = CommonInput & {
 
     /**
      * 덮어쓸 발행상태.
+     *     0 : 비공개 (기본값)
+     *     1 : 보호
+     *     3 : 발행
      */
-    visibility?: PostVisiblity;
+    visibility?: 0 | 1 | 3;
 
     /**
      * 덮어쓸 카테고리 아이디.
