@@ -1,6 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import qs from "qs";
-import { TistoryKey, TistoryAccountInfo } from "./tistory-api-types";
+import {
+    TistoryKey,
+    TistoryAccountInfo,
+    ModifyPostInput,
+    ModifyPostOutput,
+} from "./tistory-api-types";
 
 /**
  * 티스토리 URL.
@@ -15,6 +20,17 @@ export class TistoryApi {
      * 티스토리 API를 호출할 수 있는 키
      */
     private readonly key: TistoryKey;
+
+    /**
+     * 데이터에 공용 속성을 부여한다.
+     */
+    private dataMiddleware(data: any): any {
+        return Object.assign(data, {
+            //
+            // 티스토리 응답을 json 포맷으로 변환하기 위해 사용된다.
+            output: "json",
+        });
+    }
 
     constructor(key: TistoryKey) {
         this.key = key;
@@ -141,5 +157,21 @@ export class TistoryApi {
             throw new Error(`액세스 토큰을 받아올 수 없었습니다.`);
         }
         return access_token;
+    }
+
+    /**
+     * 특정 게시글을 수정합니다.
+     */
+    public async modifyPost(arg: ModifyPostInput): Promise<ModifyPostOutput> {
+        try {
+            const res = await axios({
+                method: "POST",
+                url: "https://www.tistory.com/apis/post/modify",
+                data: qs.stringify(this.dataMiddleware(arg)),
+            });
+            return res.data.tistory;
+        } catch (err) {
+            throw new Error(err?.response?.data?.tistory?.error_message);
+        }
     }
 }
