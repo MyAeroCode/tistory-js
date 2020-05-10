@@ -3,6 +3,6 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./tistory-api"));
-__export(require("./tistory-api-types"));
+__export(require("./tistory-api-v1"));
+__export(require("./tistory-api-v1-types"));
 //# sourceMappingURL=index.js.map
