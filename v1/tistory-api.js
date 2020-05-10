@@ -173,12 +173,39 @@ var TistoryApi = /** @class */ (function () {
         });
     };
     /**
+     * 블로그의 게시글 목록을 가져옵니다.
+     */
+    TistoryApi.prototype.listPost = function (arg) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function () {
+            var res, err_1;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _d.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default({
+                                method: "GET",
+                                url: "https://www.tistory.com/apis/post/list?",
+                                params: this.dataMiddleware(arg),
+                            })];
+                    case 1:
+                        res = _d.sent();
+                        return [2 /*return*/, res.data.tistory];
+                    case 2:
+                        err_1 = _d.sent();
+                        throw new Error((_c = (_b = (_a = err_1 === null || err_1 === void 0 ? void 0 : err_1.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.tistory) === null || _c === void 0 ? void 0 : _c.error_message);
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
      * 특정 게시글을 수정합니다.
      */
     TistoryApi.prototype.modifyPost = function (arg) {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
-            var res, err_1;
+            var res, err_2;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -192,8 +219,8 @@ var TistoryApi = /** @class */ (function () {
                         res = _d.sent();
                         return [2 /*return*/, res.data.tistory];
                     case 2:
-                        err_1 = _d.sent();
-                        throw new Error((_c = (_b = (_a = err_1 === null || err_1 === void 0 ? void 0 : err_1.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.tistory) === null || _c === void 0 ? void 0 : _c.error_message);
+                        err_2 = _d.sent();
+                        throw new Error((_c = (_b = (_a = err_2 === null || err_2 === void 0 ? void 0 : err_2.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.tistory) === null || _c === void 0 ? void 0 : _c.error_message);
                     case 3: return [2 /*return*/];
                 }
             });

@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput } from "./types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput } from "./types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
@@ -25,6 +25,10 @@ export declare class TistoryApi {
      * @param code 클라이언트가 발급받은 코드값
      */
     getAccessTokenViaCode(code: string): Promise<string>;
+    /**
+     * 블로그의 게시글 목록을 가져옵니다.
+     */
+    listPost(arg: ListPostInput): Promise<ListPostOutput>;
     /**
      * 특정 게시글을 수정합니다.
      */
