@@ -11,6 +11,8 @@ import {
     BlogInfoInput,
     ReadPostInput,
     ReadPostOutput,
+    WritePostInput,
+    WritePostOutput,
 } from "./types";
 
 /**
@@ -206,6 +208,22 @@ export class TistoryApi {
                 method: "GET",
                 url: "https://www.tistory.com/apis/post/read?",
                 params: this.dataMiddleware(arg),
+            });
+            return res.data.tistory;
+        } catch (err) {
+            throw new Error(err?.response?.data?.tistory?.error_message);
+        }
+    }
+
+    /**
+     * 블로그에 게시글을 작성합니다.
+     */
+    public async writePost(arg: WritePostInput): Promise<WritePostOutput> {
+        try {
+            const res = await axios({
+                method: "POST",
+                url: "https://www.tistory.com/apis/post/write",
+                data: qs.stringify(this.dataMiddleware(arg)),
             });
             return res.data.tistory;
         } catch (err) {
