@@ -5,6 +5,8 @@ import {
     TistoryAccountInfo,
     ModifyPostInput,
     ModifyPostOutput,
+    ListPostInput,
+    ListPostOutput,
 } from "./types";
 
 /**
@@ -157,6 +159,22 @@ export class TistoryApi {
             throw new Error(`액세스 토큰을 받아올 수 없었습니다.`);
         }
         return access_token;
+    }
+
+    /**
+     * 블로그의 게시글 목록을 가져옵니다.
+     */
+    public async listPost(arg: ListPostInput): Promise<ListPostOutput> {
+        try {
+            const res = await axios({
+                method: "GET",
+                url: "https://www.tistory.com/apis/post/list?",
+                params: this.dataMiddleware(arg),
+            });
+            return res.data.tistory;
+        } catch (err) {
+            throw new Error(err?.response?.data?.tistory?.error_message);
+        }
     }
 
     /**
