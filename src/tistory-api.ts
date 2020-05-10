@@ -1,0 +1,145 @@
+import axios, { AxiosResponse } from "axios";
+import qs from "qs";
+import { TistoryKey, TistoryAccountInfo } from "./tistory-api-types";
+
+/**
+ * 티스토리 URL.
+ */
+const tistoryUrl = "https://tistory.com";
+
+/**
+ * Tistory API를 호출할 수 있는 객체.
+ */
+export class TistoryApi {
+    /**
+     * 티스토리 API를 호출할 수 있는 키
+     */
+    private readonly key: TistoryKey;
+
+    constructor(key: TistoryKey) {
+        this.key = key;
+    }
+
+    /**
+     * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아온다.
+     * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있다.
+     *
+     * @param account 티스토리 계정 정보
+     */
+    public async getCodeViaAccountInfo(
+        account: TistoryAccountInfo
+    ): Promise<string> {
+        /**
+         * 로그인 시도 응답
+         */
+        let loginRes: AxiosResponse<any>;
+        try {
+            loginRes = await axios({
+                method: "POST",
+                url: "https://www.tistory.com/auth/login",
+                data: qs.stringify({
+                    fp: 1,
+                    loginId: account.id,
+                    password: account.pw,
+                    redirectUrl: tistoryUrl,
+                }),
+
+                //
+                // 302 응답을 캡쳐하기 위해 리다이렉트를 비활성화하고,
+                // 302 응답이 아니면 에러를 발생시키도록 한다.
+                maxRedirects: 0,
+                validateStatus: function (status) {
+                    return status === 302;
+                },
+            });
+        } catch (e) {
+            throw "로그인에 실패했습니다.";
+        }
+
+        /**
+         * 티스토리 로그인 응답에서 취득한 쿠키
+         */
+        const loginCookie = (loginRes["headers"]["set-cookie"] as string[])
+            .map(function (setCookie) {
+                const miniCookie = setCookie.split(";")[0];
+                return miniCookie;
+            })
+            .join(";");
+
+        //
+        // 세션이 취득되었는지 검사한다.
+        if (loginCookie.indexOf("TSSESSION") === -1) {
+            throw "세션이 반환되지 않았습니다.";
+        }
+
+        /**
+         * 코드 취득 응답
+         */
+        const authRes = await axios({
+            method: "GET",
+            url: "https://www.tistory.com/oauth/authorize?",
+
+            params: {
+                client_id: this.key.client,
+                redirect_uri: tistoryUrl,
+                response_type: "code",
+            },
+
+            headers: {
+                cookie: loginCookie,
+            },
+        });
+
+        /**
+         * 코드 후보군
+         */
+        const authCodeCandidates: string[] | undefined = authRes.data.match(
+            /code=[^&']+/gm
+        );
+
+        //
+        // 코드 후보군에 값이 단 하나만 있어야 한다.
+        if (authCodeCandidates === undefined) {
+            throw "코드가 반환되지 않았습니다.";
+        }
+        if (authCodeCandidates.length > 1) {
+            throw `코드 후보가 너무 많습니다. ${JSON.stringify(
+                authCodeCandidates,
+                null,
+                4
+            )}`;
+        }
+
+        /**
+         * 코드
+         */
+        const authCode = authCodeCandidates[0].slice(5);
+        return authCode;
+    }
+
+    /**
+     * 클라이언트가 발급받은 코드로 액세스 토큰을 취득한다.
+     *
+     * @param code 클라이언트가 발급받은 코드값
+     */
+    public async getAccessTokenViaCode(code: string): Promise<string> {
+        const res = await axios({
+            method: "GET",
+            url: "https://www.tistory.com/oauth/access_token",
+            params: {
+                client_id: this.key.client,
+                client_secret: this.key.secret,
+                redirect_uri: tistoryUrl,
+                response_type: "code",
+                code: code,
+                grant_type: "authorization_code",
+            },
+        });
+
+        const { access_token } = res.data;
+        if (access_token === undefined) {
+            throw new Error(`액세스 토큰을 받아올 수 없었습니다.`);
+        }
+        return access_token;
+    }
+}
