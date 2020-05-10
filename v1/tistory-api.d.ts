@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput } from "./types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput, ListCategoryInput, ListCategoryOutput } from "./types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
@@ -45,5 +45,9 @@ export declare class TistoryApi {
      * 특정 게시글을 수정합니다.
      */
     modifyPost(arg: ModifyPostInput): Promise<ModifyPostOutput>;
+    /**
+     * 블로그의 카테고리 목록을 가져옵니다.
+     */
+    listCategory(arg: ListCategoryInput): Promise<ListCategoryOutput>;
 }
 //# sourceMappingURL=tistory-api.d.ts.map
