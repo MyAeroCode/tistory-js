@@ -2,7 +2,7 @@
     "name": "tistory-api",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "out/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "ts-node ./src"
@@ -20,8 +20,12 @@
     "homepage": "https://github.com/MyAeroCode/tistory-api#readme",
     "devDependencies": {
         "@types/node": "^13.13.5",
+        "@types/qs": "^6.9.2",
         "ts-node": "^8.10.1",
         "typescript": "^3.8.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "axios": "^0.19.2",
+        "qs": "^6.9.4"
+    }
 }
