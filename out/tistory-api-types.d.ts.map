@@ -1,0 +1,1 @@
+{"version":3,"file":"tistory-api-types.d.ts","sourceRoot":"","sources":["../src/tistory-api-types.ts"],"names":[],"mappings":"AAAA;;GAEG;AACH,MAAM,WAAW,UAAU;IACvB;;OAEG;IACH,MAAM,EAAE,MAAM,CAAC;IAEf;;OAEG;IACH,MAAM,EAAE,MAAM,CAAC;CAClB;AAED;;GAEG;AACH,MAAM,WAAW,kBAAkB;IAC/B;;OAEG;IACH,EAAE,EAAE,MAAM,CAAC;IAEX;;OAEG;IACH,EAAE,EAAE,MAAM,CAAC;CACd"}
