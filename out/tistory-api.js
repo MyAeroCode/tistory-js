@@ -53,6 +53,16 @@ var TistoryApi = /** @class */ (function () {
         this.key = key;
     }
     /**
+     * 데이터에 공용 속성을 부여한다.
+     */
+    TistoryApi.prototype.dataMiddleware = function (data) {
+        return Object.assign(data, {
+            //
+            // 티스토리 응답을 json 포맷으로 변환하기 위해 사용된다.
+            output: "json",
+        });
+    };
+    /**
      * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아온다.
      * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있다.
      *
@@ -158,6 +168,33 @@ var TistoryApi = /** @class */ (function () {
                             throw new Error("\uC561\uC138\uC2A4 \uD1A0\uD070\uC744 \uBC1B\uC544\uC62C \uC218 \uC5C6\uC5C8\uC2B5\uB2C8\uB2E4.");
                         }
                         return [2 /*return*/, access_token];
+                }
+            });
+        });
+    };
+    /**
+     * 특정 게시글을 수정합니다.
+     */
+    TistoryApi.prototype.modifyPost = function (arg) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function () {
+            var res, err_1;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _d.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default({
+                                method: "POST",
+                                url: "https://www.tistory.com/apis/post/modify",
+                                data: qs_1.default.stringify(this.dataMiddleware(arg)),
+                            })];
+                    case 1:
+                        res = _d.sent();
+                        return [2 /*return*/, res.data.tistory];
+                    case 2:
+                        err_1 = _d.sent();
+                        throw new Error((_c = (_b = (_a = err_1 === null || err_1 === void 0 ? void 0 : err_1.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.tistory) === null || _c === void 0 ? void 0 : _c.error_message);
+                    case 3: return [2 /*return*/];
                 }
             });
         });

@@ -4,4 +4,5 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./tistory-api"));
+__export(require("./tistory-api-types"));
 //# sourceMappingURL=index.js.map

@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo } from "./tistory-api-types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput } from "./tistory-api-types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
@@ -7,6 +7,10 @@ export declare class TistoryApi {
      * 티스토리 API를 호출할 수 있는 키
      */
     private readonly key;
+    /**
+     * 데이터에 공용 속성을 부여한다.
+     */
+    private dataMiddleware;
     constructor(key: TistoryKey);
     /**
      * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아온다.
@@ -21,5 +25,9 @@ export declare class TistoryApi {
      * @param code 클라이언트가 발급받은 코드값
      */
     getAccessTokenViaCode(code: string): Promise<string>;
+    /**
+     * 특정 게시글을 수정합니다.
+     */
+    modifyPost(arg: ModifyPostInput): Promise<ModifyPostOutput>;
 }
 //# sourceMappingURL=tistory-api.d.ts.map
