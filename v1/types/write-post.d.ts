@@ -28,7 +28,7 @@ export declare type WritePostInput = CommonInput & {
      */
     category?: string;
     /**
-     * 타임스탬프 형식이며,
+     * 초 단위의 타임스탬프 형식이며,
      * 미래의 시간을 넣을 경우에는 예약이 활성화됩니다.
      */
     published?: number;

@@ -1,4 +1,4 @@
-import { PostVisiblity, CommonInput } from "./common";
+import { CommonInput } from "./common";
 /**
  * 게시글 수정 API 입력
  */
@@ -22,15 +22,18 @@ export declare type ModifyPostInput = CommonInput & {
     content?: string;
     /**
      * 덮어쓸 발행상태.
+     *     0 : 비공개 (기본값)
+     *     1 : 보호
+     *     3 : 발행
      */
-    visibility?: PostVisiblity;
+    visibility?: 0 | 1 | 3;
     /**
      * 덮어쓸 카테고리 아이디.
      * 이 필드를 지정하면 카테고리가 이동됩니다.
      */
     category?: string;
     /**
-     * 타임스탬프 형식이며,
+     * 초 단위의 타임스탬프 형식이며,
      * 미래의 시간을 넣을 경우에는 예약이 활성화됩니다.
      */
     published?: number;

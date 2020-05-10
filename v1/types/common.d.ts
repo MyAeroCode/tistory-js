@@ -12,23 +12,6 @@ export interface TistoryKey {
     secret: string;
 }
 /**
- * 게시글 발행 상태
- */
-export declare enum PostVisiblity {
-    /**
-     * 비공개
-     */
-    HIDDEN = 0,
-    /**
-     * 보호
-     */
-    PROTECT = 1,
-    /**
-     * 발행
-     */
-    PUBLISH = 3
-}
-/**
  * 티스토리 계정 정보
  */
 export interface TistoryAccountInfo {
