@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput } from "./types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput } from "./types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
@@ -37,6 +37,10 @@ export declare class TistoryApi {
      * 게시글 하나를 읽어옵니다.
      */
     readPost(arg: ReadPostInput): Promise<ReadPostOutput>;
+    /**
+     * 블로그에 게시글을 작성합니다.
+     */
+    writePost(arg: WritePostInput): Promise<WritePostOutput>;
     /**
      * 특정 게시글을 수정합니다.
      */
