@@ -15,7 +15,9 @@ import {
     WritePostOutput,
     ListCategoryInput,
     ListCategoryOutput,
+    AttachPostInput,
 } from "./types";
+const unirest = require("unirest");
 
 /**
  * 티스토리 URL.
@@ -231,6 +233,37 @@ export class TistoryApi {
         } catch (err) {
             throw new Error(err?.response?.data?.tistory?.error_message);
         }
+    }
+
+    /**
+     * 블로그에 파일을 업로드합니다.
+     * 단, 사진 파일만 올릴 수 있습니다.
+     */
+    public async attachPost(arg: AttachPostInput): Promise<AttachPostInput> {
+        /**
+         * @TODO
+         *      axios로 보내기어려워 일단 unirest를 사용했습니다.
+         *      나중에는 unirest를 제거하고 axios로만 보내야 합니다.
+         */
+        return new Promise(async function (resolve, reject) {
+            unirest("POST", "https://www.tistory.com/apis/post/attach")
+                .field("blogName", arg.blogName)
+                .field("access_token", arg.access_token)
+                .field("output", "json")
+                .attach("uploadedfile", arg.filePath)
+                .end(function (res: any) {
+                    if (res.error) {
+                        reject(
+                            new Error(
+                                res.body?.tistory?.error_message ||
+                                    "네트워크 에러"
+                            )
+                        );
+                    } else {
+                        resolve(res?.body?.tistory);
+                    }
+                });
+        });
     }
 
     /**
