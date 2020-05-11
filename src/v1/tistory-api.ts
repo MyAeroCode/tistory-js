@@ -65,6 +65,33 @@ export class TistoryApi {
     }
 
     /**
+     * 에러 메세지를 추출한다.
+     */
+    private extractErrorMessage(error: any): string {
+        //
+        // 에러 메세지를 주지 않은 경우.
+        if (error === undefined || error === null) {
+            return "에러가 발생했지만 정보가 주어지지 않았습니다.";
+        }
+
+        //
+        // 티스토리에서 에러를 반환한 경우.
+        if (error?.response?.data?.tistory?.error_message) {
+            return error?.response?.data?.tistory?.error_message;
+        }
+
+        //
+        // 에러 객체인 경우.
+        if (error.message) {
+            return error.message;
+        }
+
+        //
+        // 알 수 없는 에러
+        return String(error);
+    }
+
+    /**
      * API 객체를 생성합니다.
      * key가 명시적으로 주어지지 않았다면, 환경변수에서 설정된 값이 있는지 찾아봅니다.
      *
@@ -277,7 +304,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -293,7 +320,8 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            const e = err;
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -309,7 +337,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -325,7 +353,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -372,7 +400,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -390,7 +418,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -408,7 +436,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -426,7 +454,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -444,7 +472,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -462,7 +490,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 
@@ -480,7 +508,7 @@ export class TistoryApi {
             });
             return res.data.tistory;
         } catch (err) {
-            throw new Error(err?.response?.data?.tistory?.error_message);
+            throw new Error(this.extractErrorMessage(err));
         }
     }
 }
