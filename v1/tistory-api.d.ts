@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput, ListCategoryInput, ListCategoryOutput, AttachPostInput, DeleteCommentInput, DeleteCommentOutput, ModifyCommentInput, ModifyCommentOutput, WriteCommentInput, WriteCommentOutput, ListCommentInput, ListCommentOutput } from "./types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput, ListCategoryInput, ListCategoryOutput, AttachPostInput, DeleteCommentInput, DeleteCommentOutput, ModifyCommentInput, ModifyCommentOutput, WriteCommentInput, WriteCommentOutput, ListCommentInput, ListCommentOutput, NewestCommentInput, NewestCommentOutput } from "./types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
@@ -54,6 +54,10 @@ export declare class TistoryApi {
      * 블로그의 카테고리 목록을 가져옵니다.
      */
     listCategory(arg: ListCategoryInput): Promise<ListCategoryOutput>;
+    /**
+     * 특정 블로그의 최신 댓글 목록을 가져옵니다.
+     */
+    newestComment(arg: NewestCommentInput): Promise<NewestCommentOutput>;
     /**
      * 특정 게시글의 모든 댓글 목록을 가져옵니다.
      */
