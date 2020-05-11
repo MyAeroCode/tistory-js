@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "ts-node ./src",
         "compile": "rm -rf ./v1 && tsc",
-        "prepublish": "npm run compile"
+        "prepublishOnly": "npm run compile"
     },
     "repository": {
         "type": "git",
