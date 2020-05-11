@@ -35,6 +35,16 @@ const unirest = require("unirest");
 const tistoryUrl = "https://tistory.com";
 
 /**
+ * 환경변수 키
+ */
+enum ENVKEY {
+    client = `TISTORY_API_APP_CLIENT`,
+    secret = `TISTORY_API_APP_SECRET`,
+    id = `TISTORY_API_USER_ID`,
+    pw = `TISTORY_API_USER_PW`,
+}
+
+/**
  * Tistory API를 호출할 수 있는 객체.
  */
 export class TistoryApi {
@@ -54,19 +64,93 @@ export class TistoryApi {
         });
     }
 
-    constructor(key: TistoryKey) {
-        this.key = key;
+    /**
+     * API 객체를 생성합니다.
+     * key가 명시적으로 주어지지 않았다면, 환경변수에서 설정된 값이 있는지 찾아봅니다.
+     *
+     * @exmaple
+     *      사용하는 환경변수는 다음과 같습니다.
+     *      "TISTORY_API_APP_CLIENT" : 티스토리 클라이언트 키
+     *      "TISTORY_API_APP_SECRET" : 티스토리 시크릿 키
+     */
+    constructor(key?: TistoryKey) {
+        if (key) {
+            //
+            // 키가 명시적으로 주어진 경우.
+            this.key = key;
+        } else {
+            //
+            // 키가 명시적으로 주어지지 않은 경우.
+            // 환경변수를 사용하여 찾아본다.
+            const client: string | undefined = process.env[ENVKEY.client];
+            const secret: string | undefined = process.env[ENVKEY.secret];
+
+            //
+            // 환경변수 유효성 체크.
+            if (client === undefined) {
+                throw new Error(
+                    `티스토리 클라이언트 키를 환경변수(${ENVKEY.client})에서 찾을 수 없습니다.`
+                );
+            }
+            if (secret === undefined) {
+                throw new Error(
+                    `티스토리 시크릿 키를 환경변수(${ENVKEY.secret})에서 찾을 수 없습니다.`
+                );
+            }
+
+            //
+            // 환경변수 값을 대입
+            this.key = {
+                client,
+                secret,
+            };
+        }
     }
 
     /**
-     * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아온다.
-     * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있다.
+     * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아옵니다.
+     * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있습니다.
+     * 계정 정보가 명시적으로 주어지지 않았다면 환경변수에서 설정되어 있나 찾아봅니다.
      *
      * @param account 티스토리 계정 정보
+     *
+     * @example
+     *      사용하는 환경변수는 다음과 같습니다.
+     *      "TISTORY_API_USER_ID" : 티스토리 로그인에 사용되는 아이디
+     *      "TISTORY_API_USER_PW" : 티스토리 로그인에 사용되는 비밀번호
      */
     public async getCodeViaAccountInfo(
-        account: TistoryAccountInfo
+        account?: TistoryAccountInfo
     ): Promise<string> {
+        //
+        // 계정 정보가 명시적으로 주어졌는지 확인합니다.
+        if (account === undefined) {
+            //
+            // 명시적으로 주어지지 않았다면, 환경변수에서 찾아봅니다.
+            const id: string | undefined = process.env[ENVKEY.id];
+            const pw: string | undefined = process.env[ENVKEY.pw];
+
+            //
+            // 환경변수의 유효성을 체크합니다.
+            if (id === undefined) {
+                throw new Error(
+                    `티스토리 계정 아이디를 환경변수(${ENVKEY.id})에서 찾을 수 없습니다.`
+                );
+            }
+            if (pw === undefined) {
+                throw new Error(
+                    `티스토리 계정 비밀번호를 환경변수(${ENVKEY.pw})에서 찾을 수 없습니다.`
+                );
+            }
+
+            //
+            // 환경변수 값을 대입합니다.
+            account = {
+                id,
+                pw,
+            };
+        }
+
         /**
          * 로그인 시도 응답
          */
