@@ -8,14 +8,6 @@
 
 ## Installation
 
-#### 깃허브에서 설치하기
-
-```bash
-$ npm install myaerocode/tistory-js#master
-```
-
-#### 레포지터리에서 설치하기
-
 ```bash
 $ npm install tistory-js
 ```
