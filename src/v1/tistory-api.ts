@@ -24,6 +24,8 @@ import {
     WriteCommentOutput,
     ListCommentInput,
     ListCommentOutput,
+    NewestCommentInput,
+    NewestCommentOutput,
 } from "./types";
 const unirest = require("unirest");
 
@@ -300,6 +302,24 @@ export class TistoryApi {
             const res = await axios({
                 method: "GET",
                 url: "https://www.tistory.com/apis/category/list?",
+                params: this.dataMiddleware(arg),
+            });
+            return res.data.tistory;
+        } catch (err) {
+            throw new Error(err?.response?.data?.tistory?.error_message);
+        }
+    }
+
+    /**
+     * 특정 블로그의 최신 댓글 목록을 가져옵니다.
+     */
+    public async newestComment(
+        arg: NewestCommentInput
+    ): Promise<NewestCommentOutput> {
+        try {
+            const res = await axios({
+                method: "GET",
+                url: "https://www.tistory.com/apis/comment/newest?",
                 params: this.dataMiddleware(arg),
             });
             return res.data.tistory;
