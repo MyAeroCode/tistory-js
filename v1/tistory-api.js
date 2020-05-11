@@ -47,11 +47,55 @@ var unirest = require("unirest");
  */
 var tistoryUrl = "https://tistory.com";
 /**
+ * 환경변수 키
+ */
+var ENVKEY;
+(function (ENVKEY) {
+    ENVKEY["client"] = "TISTORY_API_APP_CLIENT";
+    ENVKEY["secret"] = "TISTORY_API_APP_SECRET";
+    ENVKEY["id"] = "TISTORY_API_USER_ID";
+    ENVKEY["pw"] = "TISTORY_API_USER_PW";
+})(ENVKEY || (ENVKEY = {}));
+/**
  * Tistory API를 호출할 수 있는 객체.
  */
 var TistoryApi = /** @class */ (function () {
+    /**
+     * API 객체를 생성합니다.
+     * key가 명시적으로 주어지지 않았다면, 환경변수에서 설정된 값이 있는지 찾아봅니다.
+     *
+     * @exmaple
+     *      사용하는 환경변수는 다음과 같습니다.
+     *      "TISTORY_API_APP_CLIENT" : 티스토리 클라이언트 키
+     *      "TISTORY_API_APP_SECRET" : 티스토리 시크릿 키
+     */
     function TistoryApi(key) {
-        this.key = key;
+        if (key) {
+            //
+            // 키가 명시적으로 주어진 경우.
+            this.key = key;
+        }
+        else {
+            //
+            // 키가 명시적으로 주어지지 않은 경우.
+            // 환경변수를 사용하여 찾아본다.
+            var client = process.env[ENVKEY.client];
+            var secret = process.env[ENVKEY.secret];
+            //
+            // 환경변수 유효성 체크.
+            if (client === undefined) {
+                throw new Error("\uD2F0\uC2A4\uD1A0\uB9AC \uD074\uB77C\uC774\uC5B8\uD2B8 \uD0A4\uB97C \uD658\uACBD\uBCC0\uC218(" + ENVKEY.client + ")\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.");
+            }
+            if (secret === undefined) {
+                throw new Error("\uD2F0\uC2A4\uD1A0\uB9AC \uC2DC\uD06C\uB9BF \uD0A4\uB97C \uD658\uACBD\uBCC0\uC218(" + ENVKEY.secret + ")\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.");
+            }
+            //
+            // 환경변수 값을 대입
+            this.key = {
+                client: client,
+                secret: secret,
+            };
+        }
     }
     /**
      * 데이터에 공용 속성을 부여한다.
@@ -64,18 +108,46 @@ var TistoryApi = /** @class */ (function () {
         });
     };
     /**
-     * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아온다.
-     * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있다.
+     * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아옵니다.
+     * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있습니다.
+     * 계정 정보가 명시적으로 주어지지 않았다면 환경변수에서 설정되어 있나 찾아봅니다.
      *
      * @param account 티스토리 계정 정보
+     *
+     * @example
+     *      사용하는 환경변수는 다음과 같습니다.
+     *      "TISTORY_API_USER_ID" : 티스토리 로그인에 사용되는 아이디
+     *      "TISTORY_API_USER_PW" : 티스토리 로그인에 사용되는 비밀번호
      */
     TistoryApi.prototype.getCodeViaAccountInfo = function (account) {
         return __awaiter(this, void 0, void 0, function () {
-            var loginRes, e_1, loginCookie, authRes, authCodeCandidates, authCode;
+            var id, pw, loginRes, e_1, loginCookie, authRes, authCodeCandidates, authCode;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        //
+                        // 계정 정보가 명시적으로 주어졌는지 확인합니다.
+                        if (account === undefined) {
+                            id = process.env[ENVKEY.id];
+                            pw = process.env[ENVKEY.pw];
+                            //
+                            // 환경변수의 유효성을 체크합니다.
+                            if (id === undefined) {
+                                throw new Error("\uD2F0\uC2A4\uD1A0\uB9AC \uACC4\uC815 \uC544\uC774\uB514\uB97C \uD658\uACBD\uBCC0\uC218(" + ENVKEY.id + ")\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.");
+                            }
+                            if (pw === undefined) {
+                                throw new Error("\uD2F0\uC2A4\uD1A0\uB9AC \uACC4\uC815 \uBE44\uBC00\uBC88\uD638\uB97C \uD658\uACBD\uBCC0\uC218(" + ENVKEY.pw + ")\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.");
+                            }
+                            //
+                            // 환경변수 값을 대입합니다.
+                            account = {
+                                id: id,
+                                pw: pw,
+                            };
+                        }
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, axios_1.default({
                                 method: "POST",
                                 url: "https://www.tistory.com/auth/login",
@@ -93,13 +165,13 @@ var TistoryApi = /** @class */ (function () {
                                     return status === 302;
                                 },
                             })];
-                    case 1:
-                        loginRes = _a.sent();
-                        return [3 /*break*/, 3];
                     case 2:
+                        loginRes = _a.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
                         e_1 = _a.sent();
                         throw "로그인에 실패했습니다.";
-                    case 3:
+                    case 4:
                         loginCookie = loginRes["headers"]["set-cookie"]
                             .map(function (setCookie) {
                             var miniCookie = setCookie.split(";")[0];
@@ -123,7 +195,7 @@ var TistoryApi = /** @class */ (function () {
                                     cookie: loginCookie,
                                 },
                             })];
-                    case 4:
+                    case 5:
                         authRes = _a.sent();
                         authCodeCandidates = authRes.data.match(/code=[^&']+/gm);
                         //

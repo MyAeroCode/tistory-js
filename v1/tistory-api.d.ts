@@ -11,14 +11,29 @@ export declare class TistoryApi {
      * 데이터에 공용 속성을 부여한다.
      */
     private dataMiddleware;
-    constructor(key: TistoryKey);
     /**
-     * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아온다.
-     * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있다.
+     * API 객체를 생성합니다.
+     * key가 명시적으로 주어지지 않았다면, 환경변수에서 설정된 값이 있는지 찾아봅니다.
+     *
+     * @exmaple
+     *      사용하는 환경변수는 다음과 같습니다.
+     *      "TISTORY_API_APP_CLIENT" : 티스토리 클라이언트 키
+     *      "TISTORY_API_APP_SECRET" : 티스토리 시크릿 키
+     */
+    constructor(key?: TistoryKey);
+    /**
+     * 어떤 유저의 아이디와 비밀번호를 직접받아 코드를 받아옵니다.
+     * 이 코드를 getAccessTokenViaCode에 전달하면 액세스 토큰을 얻을 수 있습니다.
+     * 계정 정보가 명시적으로 주어지지 않았다면 환경변수에서 설정되어 있나 찾아봅니다.
      *
      * @param account 티스토리 계정 정보
+     *
+     * @example
+     *      사용하는 환경변수는 다음과 같습니다.
+     *      "TISTORY_API_USER_ID" : 티스토리 로그인에 사용되는 아이디
+     *      "TISTORY_API_USER_PW" : 티스토리 로그인에 사용되는 비밀번호
      */
-    getCodeViaAccountInfo(account: TistoryAccountInfo): Promise<string>;
+    getCodeViaAccountInfo(account?: TistoryAccountInfo): Promise<string>;
     /**
      * 클라이언트가 발급받은 코드로 액세스 토큰을 취득한다.
      *
