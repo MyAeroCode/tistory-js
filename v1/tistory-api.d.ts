@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput, ListCategoryInput, ListCategoryOutput, AttachPostInput, DeleteCommentInput, DeleteCommentOutput, ModifyCommentInput, ModifyCommentOutput } from "./types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput, ListCategoryInput, ListCategoryOutput, AttachPostInput, DeleteCommentInput, DeleteCommentOutput, ModifyCommentInput, ModifyCommentOutput, WriteCommentInput, WriteCommentOutput } from "./types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
@@ -54,6 +54,10 @@ export declare class TistoryApi {
      * 블로그의 카테고리 목록을 가져옵니다.
      */
     listCategory(arg: ListCategoryInput): Promise<ListCategoryOutput>;
+    /**
+     * 댓글 하나를 작성합니다.
+     */
+    writeComment(arg: WriteCommentInput): Promise<WriteCommentOutput>;
     /**
      * 특정 댓글 하나를 수정합니다.
      */
