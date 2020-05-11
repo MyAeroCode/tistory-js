@@ -313,6 +313,12 @@ export class TistoryApi {
      */
     public async listPost(arg: ListPostInput): Promise<ListPostOutput> {
         try {
+            //
+            // 유효성 검사
+            if (arg.page <= 0) {
+                throw new Error(`페이지 번호는 1부터 시작합니다.`);
+            }
+
             const res = await axios({
                 method: "GET",
                 url: "https://www.tistory.com/apis/post/list?",

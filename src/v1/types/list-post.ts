@@ -12,8 +12,9 @@ export type ListPostInput = CommonInput & {
 
     /**
      * 불러올 페이지 번호.
+     * 1부터 시작합니다.
      */
-    page: string;
+    page: number;
 };
 
 /**
