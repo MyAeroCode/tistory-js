@@ -372,6 +372,33 @@ var TistoryApi = /** @class */ (function () {
             });
         });
     };
+    /**
+     * 특정 댓글 하나를 삭제합니다.
+     */
+    TistoryApi.prototype.deleteComment = function (arg) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function () {
+            var res, err_7;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _d.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, axios_1.default({
+                                method: "POST",
+                                url: "https://www.tistory.com/apis/comment/delete",
+                                data: this.dataMiddleware(arg),
+                            })];
+                    case 1:
+                        res = _d.sent();
+                        return [2 /*return*/, res.data.tistory];
+                    case 2:
+                        err_7 = _d.sent();
+                        throw new Error((_c = (_b = (_a = err_7 === null || err_7 === void 0 ? void 0 : err_7.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.tistory) === null || _c === void 0 ? void 0 : _c.error_message);
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return TistoryApi;
 }());
 exports.TistoryApi = TistoryApi;
