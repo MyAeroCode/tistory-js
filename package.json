@@ -1,7 +1,7 @@
 {
     "name": "tistory-api",
     "version": "1.14.1",
-    "description": "Unofficial Tistory API",
+    "description": "Unofficial Tistory Blog API",
     "main": "out/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,8 +12,12 @@
         "type": "git",
         "url": "git+https://github.com/MyAeroCode/tistory-api.git"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "tistory",
+        "tistory api",
+        "tistory open api"
+    ],
+    "author": "MyAeroCode",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/MyAeroCode/tistory-api/issues"
