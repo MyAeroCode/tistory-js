@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
 var qs_1 = __importDefault(require("qs"));
+var unirest = require("unirest");
 /**
  * 티스토리 URL.
  */
@@ -277,6 +278,43 @@ var TistoryApi = /** @class */ (function () {
                         throw new Error((_c = (_b = (_a = err_4 === null || err_4 === void 0 ? void 0 : err_4.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.tistory) === null || _c === void 0 ? void 0 : _c.error_message);
                     case 3: return [2 /*return*/];
                 }
+            });
+        });
+    };
+    /**
+     * 블로그에 파일을 업로드합니다.
+     * 단, 사진 파일만 올릴 수 있습니다.
+     */
+    TistoryApi.prototype.attachPost = function (arg) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                /**
+                 * @TODO
+                 *      axios로 보내기어려워 일단 unirest를 사용했습니다.
+                 *      나중에는 unirest를 제거하고 axios로만 보내야 합니다.
+                 */
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                unirest("POST", "https://www.tistory.com/apis/post/attach")
+                                    .field("blogName", arg.blogName)
+                                    .field("access_token", arg.access_token)
+                                    .field("output", "json")
+                                    .attach("uploadedfile", arg.filePath)
+                                    .end(function (res) {
+                                    var _a, _b, _c;
+                                    if (res.error) {
+                                        reject(new Error(((_b = (_a = res.body) === null || _a === void 0 ? void 0 : _a.tistory) === null || _b === void 0 ? void 0 : _b.error_message) ||
+                                            "네트워크 에러"));
+                                    }
+                                    else {
+                                        resolve((_c = res === null || res === void 0 ? void 0 : res.body) === null || _c === void 0 ? void 0 : _c.tistory);
+                                    }
+                                });
+                                return [2 /*return*/];
+                            });
+                        });
+                    })];
             });
         });
     };

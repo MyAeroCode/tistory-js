@@ -1,4 +1,4 @@
-import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput, ListCategoryInput, ListCategoryOutput } from "./types";
+import { TistoryKey, TistoryAccountInfo, ModifyPostInput, ModifyPostOutput, ListPostInput, ListPostOutput, BlogInfoOutput, BlogInfoInput, ReadPostInput, ReadPostOutput, WritePostInput, WritePostOutput, ListCategoryInput, ListCategoryOutput, AttachPostInput } from "./types";
 /**
  * Tistory API를 호출할 수 있는 객체.
  */
@@ -41,6 +41,11 @@ export declare class TistoryApi {
      * 블로그에 게시글을 작성합니다.
      */
     writePost(arg: WritePostInput): Promise<WritePostOutput>;
+    /**
+     * 블로그에 파일을 업로드합니다.
+     * 단, 사진 파일만 올릴 수 있습니다.
+     */
+    attachPost(arg: AttachPostInput): Promise<AttachPostInput>;
     /**
      * 특정 게시글을 수정합니다.
      */
