@@ -20,6 +20,8 @@ import {
     DeleteCommentOutput,
     ModifyCommentInput,
     ModifyCommentOutput,
+    WriteCommentInput,
+    WriteCommentOutput,
 } from "./types";
 const unirest = require("unirest");
 
@@ -297,6 +299,24 @@ export class TistoryApi {
                 method: "GET",
                 url: "https://www.tistory.com/apis/category/list?",
                 params: this.dataMiddleware(arg),
+            });
+            return res.data.tistory;
+        } catch (err) {
+            throw new Error(err?.response?.data?.tistory?.error_message);
+        }
+    }
+
+    /**
+     * 댓글 하나를 작성합니다.
+     */
+    public async writeComment(
+        arg: WriteCommentInput
+    ): Promise<WriteCommentOutput> {
+        try {
+            const res = await axios({
+                method: "POST",
+                url: "https://www.tistory.com/apis/comment/write",
+                data: this.dataMiddleware(arg),
             });
             return res.data.tistory;
         } catch (err) {
