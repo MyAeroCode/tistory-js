@@ -1,12 +1,13 @@
 {
     "name": "tistory-js",
-    "version": "1.14.1",
+    "version": "1.14.2",
     "description": "Unofficial Tistory Blog API for Node.JS",
     "main": "out/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "ts-node ./src",
-        "compile": "rm -rf ./v1 && tsc"
+        "compile": "rm -rf ./v1 && tsc",
+        "prepublish": "npm run compile"
     },
     "repository": {
         "type": "git",

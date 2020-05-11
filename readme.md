@@ -57,7 +57,13 @@ $ npm install tistory-js
 명시적으로 인자로써 넘기거나, 암묵적으로 `환경변수`를 사용할 수 있습니다.
 
 ```ts
+//
+// using import
 import { TistoryApi } from "tistory-js/v1";
+
+//
+// using require
+const { TistoryApi } = require("tistory-js/v1");
 
 //
 // 명시적으로 키를 넘깁니다.
