@@ -1,6 +1,6 @@
 {
     "name": "tistory-js",
-    "version": "1.14.2",
+    "version": "1.14.3",
     "description": "Unofficial Tistory Blog API for Node.JS",
     "main": "out/index.js",
     "scripts": {

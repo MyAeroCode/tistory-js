@@ -63,7 +63,7 @@ import { TistoryApi } from "tistory-js/v1";
 
 //
 // using require
-const { TistoryApi } = require("tistory-js/v1");
+const TistoryApi = require("tistory-js/v1");
 
 //
 // 명시적으로 키를 넘깁니다.
