@@ -1,6 +1,6 @@
-## [Unofficial] Tistory API
+## [Unofficial] Tistory.JS
 
-`Node.JS`에서 사용할 수 있는 비공식 `Tistory API` 구현체입니다. 
+`Node.JS`에서 사용할 수 있는 비공식 `Tistory API` 구현체입니다.
 
 브라우저는 지원하지 않습니다. 🙅
 
@@ -11,14 +11,13 @@
 #### 깃허브에서 설치하기
 
 ```bash
-$ npm install myaerocode/tistory-api#master
+$ npm install myaerocode/tistory-js#master
 ```
 
 #### 레포지터리에서 설치하기
 
 ```bash
-아직 레포지터리에 배포되지 않았습니다.
-조금만 기다려주세요!
+$ npm install tistory-js
 ```
 
 ---
@@ -58,7 +57,7 @@ $ npm install myaerocode/tistory-api#master
 명시적으로 인자로써 넘기거나, 암묵적으로 `환경변수`를 사용할 수 있습니다.
 
 ```ts
-import { TistoryApi } from "tistory-api/v1";
+import { TistoryApi } from "tistory-js/v1";
 
 //
 // 명시적으로 키를 넘깁니다.
@@ -81,7 +80,7 @@ const api = new TistoryApi();
 
 #### 2. 코드 발급받기
 
-티스토리에서 `AccessToken`을 발급받기 위해서는, 사용자가 동의했을때 부여되는 `Code`값이 필요합니다. 
+티스토리에서 `AccessToken`을 발급받기 위해서는, 사용자가 동의했을때 부여되는 `Code`값이 필요합니다.
 
 현재 `Code`값을 받아오기 위한 방법들은 아래와 같습니다.
 
@@ -90,7 +89,7 @@ const api = new TistoryApi();
 
 티스토리에서 공식적으로 지원하는 방법은 `1` 뿐입니다.
 
-`2`는 이 라이브러리에서 구현한 비공식 방법입니다.
+`2`는 `Tistory JS` 라이브러리에서 구현한 비공식 방법입니다.
 
 ```ts
 /**
