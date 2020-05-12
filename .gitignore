@@ -1,6 +1,9 @@
 # Compiled Files
 /v1
 
+# Index File
+/src/index.ts
+
 # Logs
 logs
 *.log

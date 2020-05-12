@@ -64,5 +64,5 @@
         "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
     },
 
-    "exclude": ["examples", "v1", "v2", "node_modules"]
+    "exclude": ["examples", "v1", "v2", "node_modules", "src/index.ts"]
 }
