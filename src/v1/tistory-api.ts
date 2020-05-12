@@ -203,7 +203,7 @@ export class TistoryApi {
                 },
             });
         } catch (e) {
-            throw "로그인에 실패했습니다.";
+            throw new Error("로그인에 실패했습니다.");
         }
 
         /**
@@ -219,7 +219,7 @@ export class TistoryApi {
         //
         // 세션이 취득되었는지 검사한다.
         if (loginCookie.indexOf("TSSESSION") === -1) {
-            throw "세션이 반환되지 않았습니다.";
+            throw new Error("세션이 반환되지 않았습니다.");
         }
 
         /**
@@ -268,7 +268,9 @@ export class TistoryApi {
         //
         // 코드 후보군에 값이 단 하나만 있어야 한다.
         if (authCodeCandidates === null) {
-            throw "코드를 얻을 수 없습니다. 클라이언트 키와 시크릿 키가 정확한가요?";
+            throw new Error(
+                "코드를 얻을 수 없습니다. 클라이언트 키와 시크릿 키가 정확한가요?"
+            );
         }
         if (authCodeCandidates.length > 1) {
             throw `코드 후보가 너무 많습니다. ${JSON.stringify(
