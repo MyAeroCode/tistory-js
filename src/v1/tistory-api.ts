@@ -27,6 +27,7 @@ import {
     NewestCommentInput,
     NewestCommentOutput,
 } from "./types";
+import urlParse from "url-parse";
 const unirest = require("unirest");
 
 /**
@@ -240,16 +241,34 @@ export class TistoryApi {
         });
 
         /**
-         * 코드 후보군
+         * 코드 후보군.
+         * 다음과 같은 조건을 만족하는 모든 링크를 추출한다.
+         *
+         * @example
+         *      1. 쿼터 또는 더블쿼터 또는 백쿼터로 감싸져있다.
+         *      2. https://tistory.com으로 시작한다.
+         *      3. code 파라미터가 포함되어 있다.
+         *
+         * @example
+         *      'https://tistory.com?state=&code=코드값';
+         *      'https://tistory.com?code=코드값&state=';
+         *      'https://tistory.com?code=코드값&';
+         *      'https://tistory.com?code=코드값';
+         *
+         * @warning
+         *      각 결과가 ~쿼터로 감싸져있는것에 주의해야 한다.
+         *      사용할 때는 slice(1, -1)처럼 쿼터를 풀어내고 사용할 것.
          */
-        const authCodeCandidates: string[] | undefined = authRes.data.match(
-            /code=[^&']+/gm
+        const authCodeCandidates:
+            | string[]
+            | null = (authRes.data as string).match(
+            /(['"`])(https:\/\/tistory\.com.*?(\?code|&code)=.*?)\1/gm
         );
 
         //
         // 코드 후보군에 값이 단 하나만 있어야 한다.
-        if (authCodeCandidates === undefined) {
-            throw "코드가 반환되지 않았습니다.";
+        if (authCodeCandidates === null) {
+            throw "코드를 얻을 수 없습니다. 클라이언트 키와 시크릿 키가 정확한가요?";
         }
         if (authCodeCandidates.length > 1) {
             throw `코드 후보가 너무 많습니다. ${JSON.stringify(
@@ -259,10 +278,17 @@ export class TistoryApi {
             )}`;
         }
 
-        /**
-         * 코드
-         */
-        const authCode = authCodeCandidates[0].slice(5);
+        //
+        // 코드가 포함된 리다이렉션 링크에서,
+        // 코드값을 추출한다.
+        const redirectUrlContaingCode = authCodeCandidates[0].slice(1, -1);
+        const url = new urlParse(redirectUrlContaingCode, true);
+        const authCode = url.query["code"];
+        if (authCode === undefined) {
+            throw new Error(
+                "{getCodeViaAccountInfo}에 오류가 있는 것 같습니다."
+            );
+        }
         return authCode;
     }
 
