@@ -28,7 +28,8 @@ import {
     NewestCommentOutput,
 } from "./types";
 import urlParse from "url-parse";
-const unirest = require("unirest");
+import FormData from "form-data";
+import fs from "fs";
 
 /**
  * 티스토리 URL.
@@ -396,30 +397,48 @@ export class TistoryApi {
      * 단, 사진 파일만 올릴 수 있습니다.
      */
     public async attachPost(arg: AttachPostInput): Promise<AttachPostInput> {
-        /**
-         * @TODO
-         *      axios로 보내기어려워 일단 unirest를 사용했습니다.
-         *      나중에는 unirest를 제거하고 axios로만 보내야 합니다.
-         */
-        return new Promise(async function (resolve, reject) {
-            unirest("POST", "https://www.tistory.com/apis/post/attach")
-                .field("blogName", arg.blogName)
-                .field("access_token", arg.access_token)
-                .field("output", "json")
-                .attach("uploadedfile", arg.filePath)
-                .end(function (res: any) {
-                    if (res.error) {
-                        reject(
-                            new Error(
-                                res.body?.tistory?.error_message ||
-                                    "네트워크 에러"
-                            )
-                        );
-                    } else {
-                        resolve(res?.body?.tistory);
-                    }
-                });
-        });
+        try {
+            //
+            // 파일을 멀티파트로 업로드.
+            const formData = new FormData();
+            let readStream;
+            if (arg.filePath.startsWith("http")) {
+                //
+                // 인터넷에 있는 파일을 업로드
+                readStream = (
+                    await axios({
+                        method: "get",
+                        url: arg.filePath,
+                        responseType: "stream",
+                    })
+                ).data;
+            } else {
+                //
+                // 로컬에 있는 파일을 업로드
+                readStream = fs.createReadStream(arg.filePath);
+            }
+            formData.append("uploadedfile", readStream);
+
+            //
+            // API 요청.
+            const { access_token, blogName } = arg;
+            const res = await axios({
+                method: "POST",
+                url: `https://www.tistory.com/apis/post/attach`,
+                headers: {
+                    ...formData.getHeaders(),
+                },
+                params: {
+                    access_token,
+                    blogName,
+                    output: "json",
+                },
+                data: formData,
+            });
+            return res.data.tistory;
+        } catch (err) {
+            throw new Error(this.extractErrorMessage(err));
+        }
     }
 
     /**

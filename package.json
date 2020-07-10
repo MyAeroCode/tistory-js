@@ -1,6 +1,6 @@
 {
     "name": "tistory-js",
-    "version": "1.14.11",
+    "version": "1.15.0",
     "description": "Unofficial Tistory Blog API for Node.JS",
     "main": "out/index.js",
     "scripts": {
@@ -26,6 +26,7 @@
     },
     "homepage": "https://github.com/MyAeroCode/tistory-api#readme",
     "devDependencies": {
+        "@types/form-data": "^2.5.0",
         "@types/node": "^13.13.5",
         "@types/qs": "^6.9.2",
         "@types/url-parse": "^1.4.3",
@@ -34,8 +35,8 @@
     },
     "dependencies": {
         "axios": "^0.19.2",
+        "form-data": "^3.0.0",
         "qs": "^6.9.4",
-        "unirest": "^0.6.0",
         "url-parse": "^1.4.7"
     }
 }
